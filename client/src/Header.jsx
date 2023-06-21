@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
 export default function Header() {
+  const userInfo = useContext(UserContext);
+  // console.log(userInfo);
+
   return (
     <header className="flex justify-between">
       <Link to={"/"} className="flex items-center gap-1 text-primary">
@@ -10,7 +15,7 @@ export default function Header() {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="w-8 h-8"
+          className="w-10 h-10"
         >
           <path
             strokeLinecap="round"
@@ -20,19 +25,34 @@ export default function Header() {
         </svg>
         <span className="font-bold text-xl text-primary">airbnb</span>
       </Link>
-      <div className="flex items-centers gap-2">
-        <Link
-          to={"/register"}
-          className="font-semibold text-primary px-5 py-1 border border-primary rounded-2xl"
-        >
-          Sign up
-        </Link>
-        <Link
-          to={"/login"}
-          className="font-semibold text-white px-5 py-1 border border-primary rounded-2xl bg-primary"
-        >
-          Log in
-        </Link>
+
+      <div>
+        {!userInfo.user ? (
+          <div className="flex items-centers gap-2">
+            <Link
+              to={"/register"}
+              className="font-semibold text-primary px-7 py-2 border border-primary rounded-3xl "
+            >
+              Sign up
+            </Link>
+            <Link
+              to={"/login"}
+              className="font-semibold text-white px-7 py-2 border border-primary rounded-3xl bg-primary"
+            >
+              Log in
+            </Link>
+          </div>
+        ) : (
+          <div>
+            <Link to={"/account"}>{userInfo.user["email"]}</Link>
+            {/* <Link
+              to={"/logout"}
+              className="font-semibold text-primary px-7 py-2 border border-primary rounded-3xl "
+            >
+              Sign out
+            </Link> */}
+          </div>
+        )}
       </div>
     </header>
   );

@@ -6,16 +6,21 @@ export default function RegisterPage() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [cfPassword, setCfPassword] = useState("");
+  // const [cfPassword, setCfPassword] = useState("");
 
-  function registerUser(ev) {
+  async function registerUser(ev) {
     ev.preventDefault();
-    axios.post("/register", {
-      firstName,
-      lastName,
-      email,
-      password,
-    });
+    try {
+      await axios.post("/register", {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      alert("Registration successful! Now you can login.");
+    } catch (e) {
+      alert("Registration failed. Please try again.");
+    }
   }
 
   return (
@@ -30,12 +35,14 @@ export default function RegisterPage() {
           </label>
           <div className="flex gap-2">
             <input
+              className="input-log"
               type="text"
               placeholder={"First name"}
               value={firstName}
               onChange={(ev) => setFirstName(ev.target.value)}
             />
             <input
+              className="input-log"
               type="text"
               placeholder={"Last name"}
               value={lastName}
@@ -47,6 +54,7 @@ export default function RegisterPage() {
             {"Your email"}
           </label>
           <input
+            className="input-log"
             type="email"
             placeholder={"your@email.com"}
             value={email}
@@ -56,12 +64,13 @@ export default function RegisterPage() {
             {"Your password"}
           </label>
           <input
+            className="input-log"
             type="password"
             placeholder="••••••••••••••••"
             value={password}
             onChange={(ev) => setPassword(ev.target.value)}
           />
-          <label className="text-m font-medium text-gray-900">
+          {/* <label className="text-m font-medium text-gray-900">
             {"Confirm password"}
           </label>
           <input
@@ -69,8 +78,8 @@ export default function RegisterPage() {
             placeholder="••••••••••••••••"
             value={cfPassword}
             onChange={(ev) => setCfPassword(ev.target.value)}
-          />
-          <button className="login-button">Register</button>
+          /> */}
+          <button className="register-button">Register</button>
           <div className="text-center py-2 text-gray-900">
             {"Already a member? "}
             <Link className="font-semibold underline" to={"/login"}>
