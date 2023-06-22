@@ -35,7 +35,8 @@ export default function PlacesPage() {
         <div className="mt-4">
           {places.length > 0 &&
             places.map((place) => (
-              <div
+              <Link
+                to={"/account/places/" + place._id}
                 key={place._id}
                 className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl"
               >
@@ -47,7 +48,7 @@ export default function PlacesPage() {
                   <h2 className="text-xl text-left">{place.title}</h2>
                   <p className="text-sm mt-2 text-left">{place.description}</p>
                 </div>
-              </div>
+              </Link>
             ))}
         </div>
       </div>
