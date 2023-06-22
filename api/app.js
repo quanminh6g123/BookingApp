@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs")
 const User = require("./models/User.js");
 const Place = require("./models/Place.js");
+const Booking = require("./models/Booking.js");
 const jwt = require("jsonwebtoken")
 const cookieParser = require("cookie-parser")
 
@@ -87,6 +88,20 @@ app.get('/profile', (req, res) => {
     } else res.json(null)
 })
 
+app.get('/user', (req, res) => {
+    const { token } = req.cookies;
+    if (token) {
+        jwt.verify(token, jwtSecret, {}, async (err, user) => {
+            if (err) {
+                throw err;
+            }
+            const { email } = user
+            const userDoc = await User.find({ email: email })
+            res.json(userDoc)
+        })
+    } else res.json(null)
+})
+
 app.post('/logout', (req, res) => {
     res.cookie('token', '').json(true);
 });
@@ -94,7 +109,6 @@ app.post('/logout', (req, res) => {
 app.get('/test', (req, res) => {
     res.json('ok')
 })
-
 
 
 app.post('/places', (req, res) => {
@@ -157,5 +171,35 @@ app.get('/places/:id', async (req, res) => {
     const { id } = req.params
     res.json(await Place.findById(id));
 })
+
+app.post('/bookings', async (req, res) => {
+    const { token } = req.cookies;
+    const {
+        place, checkIn, checkOut, numberOfGuests, name, phone, price,
+    } = req.body;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) {
+            throw err;
+        }
+        Booking.create({
+            place, checkIn, checkOut, numberOfGuests, name, phone, price,
+            user: userData.id,
+        }).then((doc) => {
+            res.json(doc);
+        }).catch((err) => {
+            throw err;
+        });
+    })
+});
+
+app.get('/bookings', async (req, res) => {
+    const { token } = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) {
+            throw err;
+        }
+        res.json(await Booking.find({ user: userData.id }).populate('place'));
+    })
+});
 
 module.exports = app;

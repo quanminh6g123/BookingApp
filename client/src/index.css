@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .input-log {
   @apply w-full border my-2 py-2 px-4 rounded-3xl;
 }
@@ -18,47 +19,7 @@ button.register-button {
 .material-symbols-outlined {
   font-variation-settings:
     'FILL' 0,
-    'wght' 300,
-    'GRAD' 0,
+    'wght' 400,
+    'GRAD' 10,
     'opsz' 48
 }
-
-/* .title {
-  padding-top: 10vh;
-  text-align: left;
-  color: white;
-  opacity: .9;
-  font-size: 7vh;
-  font-weight: 500;
-}
-
-.subTitle {
-  text-align: left;
-  color: white;
-  opacity: 0.8;
-  font-size: 3vh;
-}
-
-.homeCard {
-  width: 60%;
-  border-radius: 70px;
-  padding: 2rem;
-  position: absolute;
-  justify-content: center;
-  bottom: 25%;
-  transform: translate(-50%);
-  left: 50%;
-  box-shadow: 0 1px 3px 1px rgba(134, 134, 134, 0.45);
-}
-
-
-.input-home:focus {
-  @apply outline-none;
-}
-
-
-/* @media screen and(min-width: 448px) {
-  .homeCard {
-    display: block;
-  }
-} */

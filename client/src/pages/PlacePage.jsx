@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { useParams, Navigate } from "react-router-dom";
 import axios from "axios";
 import AddressLink from "../AddressLink";
 import PlaceGallery from "../PlaceGallery";
 import BookingWidget from "../BookingWidget";
+import { UserContext } from "../UserContext";
 export default function PlacePage() {
+  const { ready, user } = useContext(UserContext);
   const { id } = useParams();
   const [place, setPlace] = useState(null);
   useEffect(() => {
@@ -16,10 +18,19 @@ export default function PlacePage() {
     });
   }, [id]);
 
+  if (!ready) {
+    return "Loading...";
+  }
+
+  if (ready && !user) {
+    return <Navigate to={"/login"} />;
+  }
+
   if (!place) return "";
 
+  console.log(place.perks);
   return (
-    <div className="mt-4 bg-gray-100 px-8 pt-8 rounded-2xl">
+    <div className="mt-4 px-4 pt-8 rounded-2xl md:w-full lg:w-2/3 m-auto">
       <h1 className="text-3xl">{place.title}</h1>
       <AddressLink>{place.address}</AddressLink>
       <PlaceGallery place={place} />
@@ -34,6 +45,13 @@ export default function PlacePage() {
           Check-out: {place.checkOut}
           <br />
           Max number of guests: {place.maxGuests}
+          <br />
+          Feature:
+          {place.perks.map((perk) => (
+            <li key={perk} className="ml-2 capitalize">
+              {perk}
+            </li>
+          ))}
         </div>
         <div>
           <BookingWidget place={place} />
