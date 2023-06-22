@@ -41,7 +41,6 @@ export default function PlacesPage() {
               >
                 <div className="flex w-32 h-32 bg-gray-300 grow shrink-0">
                   {place.photos.length > 0 && <img src={place.photos[0]} />}
-                  {/* <PlaceImg place={place} /> */}
                 </div>
                 <div className="grow-0 shrink">
                   <h2 className="text-xl text-left">{place.title}</h2>

@@ -6,7 +6,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState("");
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   async function handleLoginSubmit(ev) {
     ev.preventDefault();
@@ -17,7 +17,6 @@ export default function LoginPage() {
       });
       alert("Login successful.");
       setUser(data);
-      // console.log(user);
       setRedirect(true);
     } catch (error) {
       alert("Login failed.");
