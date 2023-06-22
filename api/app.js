@@ -5,14 +5,13 @@ const cors = require("cors")
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs")
 const User = require("./models/User.js");
+const Place = require("./models/Place.js");
 const jwt = require("jsonwebtoken")
 const cookieParser = require("cookie-parser")
 const imageDownloader = require("image-downloader")
 
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = 'awuichaiuwchasasdwd123';
-
-
 
 app.use(cookieParser())
 app.use(express.json())
@@ -106,6 +105,36 @@ app.post('/upload-by-link', async (req, res) => {
         dest: __dirname + "\\uploads\\" + newName,
     })
     res.json(newName);
+})
+
+app.post('/places', (req, res) => {
+    const { token } = req.cookies;
+    const {
+        title, address, addedPhoto, description,
+        perks, extraInfo, checkIn, checkOut, maxGuests,
+    } = req.body;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) {
+            throw err;
+        }
+        const placeDoc = await Place.create({
+            owner: userData.id,
+            title, address, addedPhoto, description,
+            perks, extraInfo, checkIn, checkOut, maxGuests,
+        })
+        res.json(placeDoc)
+    })
+});
+
+app.get('/places', (req, res) => {
+    const { token } = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) {
+            throw err;
+        }
+        const { id } = userData;
+        res.json(await Place.find({ owner: id }));
+    })
 })
 
 module.exports = app;

@@ -1,30 +1,31 @@
 import { useContext, useState } from "react";
-import { UserContext } from "../UserContext.jsx";
 import { Navigate, useParams } from "react-router-dom";
+import { UserContext } from "../UserContext";
 import axios from "axios";
 import PlacesPage from "./PlacesPage";
 import AccountNav from "../AccountNav";
 
 export default function ProfilePage() {
-  const [redirect, setRedirect] = useState(null);
   const { ready, user, setUser } = useContext(UserContext);
+  const [redirect, setRedirect] = useState(null);
   let { subpage } = useParams();
+
+  if (!ready) {
+    return "Loading...";
+  }
+
+  if (ready && !user) {
+    return <Navigate to={"/login"} />;
+  }
+
   if (subpage === undefined) {
     subpage = "profile";
   }
 
   async function logout() {
     await axios.post("/logout");
-    setRedirect("/");
     setUser(null);
-  }
-
-  if (!ready) {
-    return "Loading...";
-  }
-
-  if (ready && !user && !redirect) {
-    return <Navigate to={"/login"} />;
+    setRedirect("/");
   }
 
   if (redirect) {
@@ -35,9 +36,12 @@ export default function ProfilePage() {
       <AccountNav />
       {subpage === "profile" && (
         <div className="text-center max-w-lg mx-auto">
-          Logged in as {user.name} ({user.email})<br />
-          <button onClick={logout} className="primary max-w-sm mt-2">
-            Logout
+          Log in as {user.email} <br />
+          <button
+            onClick={logout}
+            className="mt-4 inline-flex gap-1 py-2 px-6 rounded-full bg-primary text-white"
+          >
+            Log out
           </button>
         </div>
       )}
