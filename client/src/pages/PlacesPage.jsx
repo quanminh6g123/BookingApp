@@ -5,11 +5,10 @@ import axios from "axios";
 export default function PlacesPage() {
   const [places, setPlaces] = useState([]);
   useEffect(() => {
-    axios.get("/places").then(({ data }) => {
+    axios.get("/user-places").then(({ data }) => {
       setPlaces(data);
     });
   }, []);
-  // console.log(places.length);
   return (
     <div>
       <AccountNav />

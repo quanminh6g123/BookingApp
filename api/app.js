@@ -8,7 +8,6 @@ const User = require("./models/User.js");
 const Place = require("./models/Place.js");
 const jwt = require("jsonwebtoken")
 const cookieParser = require("cookie-parser")
-const imageDownloader = require("image-downloader")
 
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = 'awuichaiuwchasasdwd123';
@@ -97,20 +96,11 @@ app.get('/test', (req, res) => {
 })
 
 
-app.post('/upload-by-link', async (req, res) => {
-    const { link } = req.body;
-    const newName = "photo" + Date.now() + '.jpg';
-    await imageDownloader.image({
-        url: link,
-        dest: __dirname + "\\uploads\\" + newName,
-    })
-    res.json(newName);
-})
 
 app.post('/places', (req, res) => {
     const { token } = req.cookies;
     const {
-        title, address, addedPhoto, description,
+        title, address, addedPhotos, description,
         perks, extraInfo, checkIn, checkOut, maxGuests,
     } = req.body;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
@@ -119,7 +109,7 @@ app.post('/places', (req, res) => {
         }
         const placeDoc = await Place.create({
             owner: userData.id,
-            title, address, photos: addedPhoto, description,
+            title, address, photos: addedPhotos, description,
             perks, extraInfo, checkIn, checkOut, maxGuests,
         })
         res.json(placeDoc)
@@ -129,7 +119,7 @@ app.post('/places', (req, res) => {
 app.put('/places', async (req, res) => {
     const { token } = req.cookies;
     const {
-        id, title, address, addedPhoto, description,
+        id, title, address, addedPhotos, description,
         perks, extraInfo, checkIn, checkOut, maxGuests,
     } = req.body;
     const placeDoc = await Place.findById(id);
@@ -139,7 +129,7 @@ app.put('/places', async (req, res) => {
         }
         if (userData.id === placeDoc.owner.toString()) {
             placeDoc.set({
-                title, address, photos: addedPhoto, description,
+                title, address, photos: addedPhotos, description,
                 perks, extraInfo, checkIn, checkOut, maxGuests
             });
             await placeDoc.save();
@@ -148,7 +138,7 @@ app.put('/places', async (req, res) => {
     })
 });
 
-app.get('/places', (req, res) => {
+app.get('/user-places', (req, res) => {
     const { token } = req.cookies;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
         if (err) {
