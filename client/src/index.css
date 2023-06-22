@@ -23,20 +23,7 @@ button.register-button {
     'opsz' 48
 }
 
-.home {
-  height: 60vh;
-  background: linear-gradient(rgba(33, 33, 33, 0.522), rgba(0, 33, 33, 0.522)), url("../img/cover.jpeg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  justify-content: center;
-  margin-top: 2vh;
-  border: 0px solid;
-  border-radius: 30px;
-  box-shadow: 0 1px 3px 1px rgba(134, 134, 134, 0.45);
-}
-
-.title {
+/* .title {
   padding-top: 10vh;
   text-align: left;
   color: white;
