@@ -12,14 +12,14 @@ export default function BookingsPage() {
     });
   }, []);
   return (
-    <div>
+    <div className="px-10">
       <AccountNav />
       <div>
         {bookings?.length > 0 &&
           bookings.map((booking) => (
             <Link
               key={booking}
-              to={`/account/bookings/${booking._id}`}
+              to={`/account/bookings/${booking}`}
               className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mb-3 drop-shadow-lg"
             >
               <div className="p-3 w-48">

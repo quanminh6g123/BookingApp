@@ -103,7 +103,7 @@ export default function PlacesFormPage() {
   }
 
   return (
-    <div>
+    <div className="px-10">
       <AccountNav />
       <form onSubmit={savePlace}>
         {preInput(

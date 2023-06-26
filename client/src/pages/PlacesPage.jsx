@@ -10,7 +10,7 @@ export default function PlacesPage() {
     });
   }, []);
   return (
-    <div>
+    <div className="px-10">
       <AccountNav />
       <div className="text-center">
         <Link

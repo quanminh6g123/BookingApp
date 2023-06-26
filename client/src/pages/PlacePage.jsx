@@ -28,9 +28,8 @@ export default function PlacePage() {
 
   if (!place) return "";
 
-  console.log(place.perks);
   return (
-    <div className="mt-4 px-4 pt-8 rounded-2xl md:w-full lg:w-2/3 m-auto">
+    <div className="mt-4 px-4 pt-8 rounded-2xl md:w-full lg:w-2/3 m-auto px-10">
       <h1 className="text-3xl">{place.title}</h1>
       <AddressLink>{place.address}</AddressLink>
       <PlaceGallery place={place} />

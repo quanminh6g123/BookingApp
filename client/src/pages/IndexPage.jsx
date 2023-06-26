@@ -9,27 +9,154 @@ export default function IndexPage() {
       setPlaces(response.data);
     });
   }, []);
+
   return (
-    <div className="mt-8 grid gap-x-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {places.length > 0 &&
-        places.map((place) => (
-          <Link to={"/place/" + place._id} key={place._id}>
-            <div className="bg-gray-500 mb-2 rounded-2xl flex">
-              {place.photos?.[0] && (
-                <img
-                  className="rounded-2xl object-cover aspect-square"
-                  src={place.photos?.[0]}
-                  alt=""
-                />
-              )}
+    <div className="px-10 -mt-5">
+      <div
+        style={{
+          backgroundImage: `url("https://blog.japanwondertravel.com/wp-content/uploads/2020/03/shibuya-sky-1200x836.jpg")`,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+        }}
+        className="rounded-3xl shadow-lg text-center py-36 mt-5 px-3"
+      >
+        <h1 className="text-5xl font-bold text-white pb-2">
+          Book your stay with StayEasy
+        </h1>
+        <h2 className="text-2xl text-white opacity-90">
+          1,480,000 rooms around the world are waiting for you!
+        </h2>
+      </div>
+      <div className="mt-5">
+        <h1 className="text-2xl font-semibold">Popular destinations</h1>
+        <div className="grid md:grid-cols-4 sm:grid-cols-2 mt-5 gap-6">
+          <div
+            className="rounded-3xl shadow-lg"
+            style={{
+              backgroundImage: `url("https://vcdn1-dulich.vnecdn.net/2022/05/11/hoan-kiem-lake-7673-1613972680-1508-1652253984.jpg?w=0&h=0&q=100&dpr=1&fit=crop&s=2wB1cBTUcNKuk68nrG6LMQ")`,
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }}
+          >
+            <div className="pt-3 flex pb-3 pl-3">
+              <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+                Hanoi
+              </h1>
             </div>
-            <h2 className="font-bold">{place.address}</h2>
-            <h3 className="text-sm text-gray-500">{place.title}</h3>
-            <div className="mt-1">
-              <span className="font-bold">${place.price}</span> per night
+          </div>
+          <div className="grid-rows-2 grid-flow-row">
+            <div
+              className="rounded-3xl shadow-lg"
+              style={{
+                backgroundImage: `url("https://statics.vinpearl.com/nha-trang-beaches-banner%20-%20Copy_1660569595.jpg")`,
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              }}
+            >
+              <div className="pt-52 flex pb-3 pl-3 mb-4">
+                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+                  Nha Trang
+                </h1>
+              </div>
             </div>
-          </Link>
-        ))}
+            <div
+              className="rounded-3xl shadow-lg"
+              style={{
+                backgroundImage: `url("https://cdnmedia.baotintuc.vn/Upload/c2tvplmdloSDblsn03qN2Q/files/2020/11/04/thanh-pho-thu-duc-tp-ho-chi-minh-41120.jpg")`,
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              }}
+            >
+              <div className="pt-28 flex pb-3 pl-3">
+                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+                  Ho Chi Minh city
+                </h1>
+              </div>
+            </div>
+          </div>
+          <div
+            className="rounded-3xl shadow-lg"
+            style={{
+              backgroundImage: `url("https://res.klook.com/image/upload/fl_lossy.progressive,w_800,c_fill,q_85/destination/ur2mrg23d91mex03l4mw.jpg")`,
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }}
+          >
+            <div className="pt-3 flex pb-3 pl-3">
+              <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+                Da Nang
+              </h1>
+            </div>
+          </div>
+          <div className="grid-rows-2 grid-flow-row">
+            <div
+              className="rounded-3xl shadow-lg"
+              style={{
+                backgroundImage: `url("https://vcdn1-dulich.vnecdn.net/2022/04/18/dulichSaPa-1650268886-1480-1650277620.png?w=0&h=0&q=100&dpr=2&fit=crop&s=JTUw8njZ_Glkqf1itzjObg")`,
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              }}
+            >
+              <div className="pt-32 flex pb-3 pl-3 mb-4">
+                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+                  Sa Pa
+                </h1>
+              </div>
+            </div>
+            <div
+              className="rounded-3xl shadow-lg"
+              style={{
+                backgroundImage: `url("https://nld.mediacdn.vn/291774122806476800/2021/11/26/cap-treo-hon-thom-02-1637912751786500410806.jpg")`,
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              }}
+            >
+              <div className="pt-48 flex pb-3 pl-3">
+                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+                  Phu Quoc
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mt-5">
+        <h1 className="text-2xl font-semibold">Hotels</h1>
+        <div className="mt-6 grid gap-x-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          {places.length > 0 &&
+            places.slice(0, 5).map((place) => (
+              <Link to={"/place/" + place._id} key={place._id}>
+                <div className="border-2 p-4 rounded-xl shadow-lg">
+                  <div className="bg-gray-500 mb-2 rounded-2xl flex">
+                    {place.photos?.[0] && (
+                      <img
+                        className="rounded-2xl object-cover aspect-square"
+                        src={place.photos?.[0]}
+                        alt=""
+                      />
+                    )}
+                  </div>
+                  <h2 className="font-bold">{place.address}</h2>
+                  <h3 className="text-sm text-gray-500">{place.title}</h3>
+                  <div className="mt-1">
+                    <span className="font-bold">${place.price}</span> per night
+                  </div>
+                </div>
+              </Link>
+            ))}
+        </div>
+        <Link to="/all" className="flex float-right my-5 cursor-pointer ">
+          <h1 className="pr-1 hover:underline">See all hotels</h1>
+          <span className="material-symbols-outlined">arrow_right_alt</span>
+        </Link>
+      </div>
     </div>
   );
 }
