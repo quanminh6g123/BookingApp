@@ -1,8 +1,7 @@
 import { useContext, useState, useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useLocation, Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import axios from "axios";
-import PlacesPage from "./PlacesPage";
 import AccountNav from "../AccountNav";
 
 export default function ProfilePage() {
@@ -10,13 +9,25 @@ export default function ProfilePage() {
   const [redirect, setRedirect] = useState(null);
   const [userDoc, setUserDoc] = useState(null);
 
+  const { pathname } = useLocation();
+  let subpage = pathname.split("/")?.[3];
+  if (subpage === undefined) {
+    subpage = "profile";
+  }
+
+  function linkClasses(type = null) {
+    let classes = "flex items-center gap-3 py-1 my-3";
+    if (type === subpage) {
+      classes += " bg-primary text-white rounded-full pr-4 pl-3 w-3/4";
+    }
+    return classes;
+  }
+
   useEffect(() => {
     axios.get("/user").then((response) => {
       setUserDoc(response.data);
     });
   }, []);
-
-  let { subpage } = useParams();
 
   if (!ready) {
     return "Loading...";
@@ -24,10 +35,6 @@ export default function ProfilePage() {
 
   if (ready && !user) {
     return <Navigate to={"/login"} />;
-  }
-
-  if (subpage === undefined) {
-    subpage = "profile";
   }
 
   async function logout() {
@@ -42,32 +49,87 @@ export default function ProfilePage() {
   return (
     <div>
       <AccountNav />
-      {subpage === "profile" && userDoc && (
-        <div className="mt-4 grow items-center justify-around text-center">
-          <div className="mt-4 grow flex items-center justify-center">
-            <div className="mb-32 border px-20 py-32 border-1 border-gray-300 rounded-xl">
+      {userDoc && (
+        <div className="flex">
+          <div className="border-r-2 w-1/5 pl-10 pt-5">
+            <h1 className="font-semibold text-2xl pb-6">Profile settings</h1>
+            <Link className={linkClasses("profile")} to={"/account/profile"}>
+              <span className="material-symbols-outlined">person</span>
+              <h1 className="font-semibold">Personal Details</h1>
+            </Link>
+            <Link
+              className={linkClasses("payment")}
+              to={"/account/profile/payment"}
+            >
+              <span className="material-symbols-outlined">
+                account_balance_wallet
+              </span>{" "}
+              <h1 className="font-semibold">Payment information</h1>
+            </Link>
+            <Link
+              className={linkClasses("safety")}
+              to={"/account/profile/safety"}
+            >
+              <span className="material-symbols-outlined">encrypted</span>
+              <h1 className="font-semibold">Safety</h1>
+            </Link>
+            <Link
+              className={linkClasses("preference")}
+              to={"/account/profile/preference"}
+            >
+              <span className="material-symbols-outlined">settings</span>
+              <h1 className="font-semibold">Preferences</h1>
+            </Link>
+            <Link
+              className={linkClasses("notification")}
+              to={"/account/profile/notification"}
+            >
+              <span className="material-symbols-outlined">notifications</span>
+              <h1 className="font-semibold">Notifications</h1>
+            </Link>
+            <button
+              className="flex items-center gap-3 py-3 pt-96"
+              onClick={logout}
+            >
+              <span className="material-symbols-outlined">logout</span>
+              <h1 className="font-semibold">Log out</h1>
+            </button>
+          </div>
+          {subpage === "profile" && (
+            <div className="pl-20 pt-5">
+              <h1 className="text-3xl font-semibold">Personal details</h1>
+              <h2 className="text-slate-500 pt-1">
+                Edit your personal details
+              </h2>
               <img
-                className="rounded-full border border-1 border-gray-400 m-auto w-28"
-                src="data:image/png;base64,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"
+                className="h-32 border-2 rounded-full my-8"
+                src="https://i.pinimg.com/originals/39/a4/71/39a47159059f38a954d77e5dcae6f0db.jpg"
                 alt="avatar"
               />
-              <h1 className="text-2xl font-semibold text-center mt-4 text-gray-900 capitalize">
-                {userDoc[0].firstName} {userDoc[0].lastName}
-              </h1>
-              <h1 className="text-xl text-center text-gray-900">
-                {userDoc[0].email}
-              </h1>
-              <button
-                onClick={logout}
-                className="mt-5 inline-flex gap-1 py-2 px-6 rounded-full bg-primary text-white"
-              >
-                Log out
-              </button>
+              <table className="table-auto">
+                <tbody>
+                  <tr>
+                    <td className="font-semibold">First name: </td>
+                    <td className="capitalize pl-20 text-slate-500">
+                      {userDoc[0].firstName}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="font-semibold ">Last name: </td>
+                    <td className="capitalize pl-20 text-slate-500">
+                      {userDoc[0].lastName}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="font-semibold">Email: </td>
+                    <td className="pl-20 text-slate-500">{userDoc[0].email}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
+          )}
         </div>
       )}
-      {subpage === "places" && <PlacesPage />}
     </div>
   );
 }

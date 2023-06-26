@@ -46,7 +46,10 @@ export default function Header() {
           </div>
         ) : (
           <div>
-            <Link to={"/account"} className="flex gap-2 text-lg items-center">
+            <Link
+              to={"/account/profile"}
+              className="flex gap-2 text-lg items-center"
+            >
               <h1 className="font-semibold text-primary">
                 {userInfo.user["email"]}
               </h1>

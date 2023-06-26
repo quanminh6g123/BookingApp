@@ -22,7 +22,14 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<IndexPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/account/" element={<ProfilePage />} />
+          <Route path="/account/profile" element={<ProfilePage />} />
+          <Route path="/account/profile/payment" element={<ProfilePage />} />
+          <Route path="/account/profile/safety" element={<ProfilePage />} />
+          <Route path="/account/profile/preference" element={<ProfilePage />} />
+          <Route
+            path="/account/profile/notification"
+            element={<ProfilePage />}
+          />
           <Route path="/account/places" element={<PlacesPage />} />
           <Route path="/account/places/new" element={<PlacesFormPage />} />
           <Route path="/account/places/:id" element={<PlacesFormPage />} />
