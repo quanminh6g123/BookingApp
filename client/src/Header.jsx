@@ -71,9 +71,11 @@ export default function Header() {
               <h1 className="font-semibold text-primary text-lg hidden md:flex">
                 {userInfo.user["email"]}
               </h1>
-              <span className="material-symbols-outlined text-4xl text-primary">
-                account_circle
-              </span>
+              <img
+                className="h-12 border-2 rounded-full"
+                src="https://i.pinimg.com/originals/39/a4/71/39a47159059f38a954d77e5dcae6f0db.jpg"
+                alt="avatar"
+              />
             </Link>
           </div>
         )}
