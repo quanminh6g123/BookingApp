@@ -16,9 +16,9 @@ export default function ProfilePage() {
   }
 
   function linkClasses(type = null) {
-    let classes = "flex items-center gap-2 py-1.5 my-3";
+    let classes = "flex items-center gap-2 pr-3 py-1.5 my-3";
     if (type === subpage) {
-      classes += " bg-primary text-white rounded-full pr-4 pl-3 w-3/4";
+      classes += " bg-primary text-white rounded-full  pl-3";
     }
     return classes;
   }
@@ -50,9 +50,9 @@ export default function ProfilePage() {
     <div>
       <AccountNav />
       {userDoc && (
-        <div className="flex px-10">
-          <div className="border-r-2 w-1/4 pr-4 lg:px-10 pt-5">
-            <h1 className="font-semibold lg:text-2xl lg:pb-6 md:pb-2 hidden md:flex md:text-xl">
+        <div className="flex justify-center pt-10 px-10">
+          <div className="border-r-2 px-10">
+            <h1 className="font-semibold lg:text-2xl lg:pb-6 md:pb-2 md:text-xl">
               Profile settings
             </h1>
             <Link className={linkClasses("profile")} to={"/account/profile"}>
@@ -89,68 +89,75 @@ export default function ProfilePage() {
               <span className="material-symbols-outlined">notifications</span>
               <h1 className="font-semibold ">Notifications</h1>
             </Link>
-            <button className="flex items-center gap-3 py-5" onClick={logout}>
-              <span className="material-symbols-outlined">logout</span>
-              <h1 className="font-semibold ">Log out</h1>
-            </button>
           </div>
-          {subpage === "profile" && (
-            <div className="mt-5 md:pl-20 pl-10">
-              <h1 className="text-3xl font-semibold">Personal details</h1>
-              <h2 className="text-slate-500 pt-1">
-                Edit your personal details
-              </h2>
-              <img
-                className="h-32 border-2 rounded-full my-8"
-                src="https://i.pinimg.com/originals/39/a4/71/39a47159059f38a954d77e5dcae6f0db.jpg"
-                alt="avatar"
-              />
-              <table className="table-auto">
-                <tbody>
-                  <tr>
-                    <td className="font-semibold">First name: </td>
-                    <td className="capitalize pl-10 md:pl-20 text-slate-500">
-                      {userDoc[0].firstName}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="font-semibold ">Last name: </td>
-                    <td className="capitalize pl-10 md:pl-20 text-slate-500">
-                      {userDoc[0].lastName}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="font-semibold">Email: </td>
-                    <td className="pl-10 md:pl-20 text-slate-500">
-                      {userDoc[0].email}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          )}
-          {subpage === "payment" && (
-            <div className="mt-5 md:pl-20 pl-10">
-              <h1 className="text-3xl font-semibold">Payment information</h1>
-            </div>
-          )}
-          {subpage === "safety" && (
-            <div className="mt-5 md:pl-20 pl-10">
-              <h1 className="text-3xl font-semibold">Safety</h1>
-            </div>
-          )}
-          {subpage === "preference" && (
-            <div className="mt-5 md:pl-20 pl-10">
-              <h1 className="text-3xl font-semibold">Preferences</h1>
-            </div>
-          )}
-          {subpage === "notification" && (
-            <div className="mt-5 md:pl-20 pl-10">
-              <h1 className="text-3xl font-semibold">Notification</h1>
-            </div>
-          )}
+          <div className="lg:w-2/5 w-2/3">
+            {subpage === "profile" && (
+              <div className="px-10 md:px-32">
+                <h1 className="text-3xl font-semibold">Personal details</h1>
+                <h2 className="text-slate-500 pt-1">
+                  Edit your personal details
+                </h2>
+                <img
+                  className="h-32 border-2 rounded-full my-8"
+                  src="https://i.pinimg.com/originals/39/a4/71/39a47159059f38a954d77e5dcae6f0db.jpg"
+                  alt="avatar"
+                />
+                <table className="table-auto">
+                  <tbody>
+                    <tr>
+                      <td className="font-semibold">First name: </td>
+                      <td className="capitalize pl-10 md:pl-20 text-slate-500">
+                        {userDoc[0].firstName}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold ">Last name: </td>
+                      <td className="capitalize pl-10 md:pl-20 text-slate-500">
+                        {userDoc[0].lastName}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold">Email: </td>
+                      <td className="pl-10 md:pl-20 text-slate-500">
+                        {userDoc[0].email}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
+            {subpage === "payment" && (
+              <div className="px-10 md:px-32">
+                <h1 className="text-3xl font-semibold">Payment information</h1>
+              </div>
+            )}
+            {subpage === "safety" && (
+              <div className="px-10 md:px-32">
+                <h1 className="text-3xl font-semibold">Safety</h1>
+              </div>
+            )}
+            {subpage === "preference" && (
+              <div className="px-10 md:px-32">
+                <h1 className="text-3xl font-semibold">Preferences</h1>
+              </div>
+            )}
+            {subpage === "notification" && (
+              <div className="px-10 md:px-32">
+                <h1 className="text-3xl font-semibold">Notification</h1>
+              </div>
+            )}
+          </div>
         </div>
       )}
+      <div className="flex place-content-center mt-20">
+        <button
+          className="flex items-center gap-3 px-4 py-2 border-2 rounded-full hover:bg-gray-100"
+          onClick={logout}
+        >
+          <span className="material-symbols-outlined">logout</span>
+          <h1 className="font-semibold ">Log out</h1>
+        </button>
+      </div>
     </div>
   );
 }

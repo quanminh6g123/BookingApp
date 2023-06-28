@@ -73,6 +73,15 @@ export default function PlacesFormPage() {
   //   console.log(URL.createObjectURL(files[0]));
   // }
 
+  async function deletePlace(ev) {
+    console.log(123);
+    ev.preventDefault();
+    if (id) {
+      await axios.delete(`/places/${id}`, {});
+    }
+    setRedirect(true);
+  }
+
   async function savePlace(ev) {
     ev.preventDefault();
     const placeData = {
@@ -242,6 +251,14 @@ export default function PlacesFormPage() {
           Save
         </button>
       </form>
+      {id && (
+        <button
+          onClick={deletePlace}
+          className="w-full bg-red-400 text-white mb-4 py-2 border rounded-xl text-xl font-semibold"
+        >
+          Remove this place
+        </button>
+      )}
     </div>
   );
 }

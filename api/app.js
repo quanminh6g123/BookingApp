@@ -117,6 +117,7 @@ app.post('/places', (req, res) => {
         title, address, addedPhotos, description,
         perks, extraInfo, checkIn, checkOut, maxGuests, price
     } = req.body;
+
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
         if (err) {
             throw err;
@@ -172,6 +173,19 @@ app.get('/places/:id', async (req, res) => {
     res.json(await Place.findById(id));
 })
 
+app.delete('/places/:id', async (req, res) => {
+    const { id } = req.params
+    await Place.findByIdAndDelete(id)
+    await Booking.deleteMany({ place: id })
+    res.json("Success");
+})
+
+app.get('/places/find/:query', async (req, res) => {
+    const { query } = req.params
+    const places = await Place.find({ address: { $regex: query } });
+    res.json(places)
+})
+
 app.post('/bookings', async (req, res) => {
     const { token } = req.cookies;
     const {
@@ -201,5 +215,13 @@ app.get('/bookings', async (req, res) => {
         res.json(await Booking.find({ user: userData.id }).populate('place'));
     })
 });
+
+app.delete('/bookings/:id', async (req, res) => {
+    const { id } = req.params
+    res.json(await Booking.findByIdAndDelete(id))
+})
+
+
+
 
 module.exports = app;

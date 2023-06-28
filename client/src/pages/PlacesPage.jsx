@@ -10,7 +10,7 @@ export default function PlacesPage() {
     });
   }, []);
   return (
-    <div className="px-10">
+    <div className="mx-10 lg:mx-60">
       <AccountNav />
       <div className="text-center">
         <Link
@@ -31,7 +31,7 @@ export default function PlacesPage() {
           </svg>
           Add new place
         </Link>
-        <div className="mt-4">
+        <div className="mt-4 mb-8">
           {places.length > 0 &&
             places.map((place) => (
               <Link
@@ -41,6 +41,9 @@ export default function PlacesPage() {
               >
                 <div className="flex w-32 h-32 bg-gray-300 grow shrink-0">
                   {place.photos.length > 0 && <img src={place.photos[0]} />}
+                  {!place.photos[0] && (
+                    <img src="https://kelembagaan.kemnaker.go.id/assets/img/no-image.svg" />
+                  )}
                 </div>
                 <div className="grow-0 shrink">
                   <h2 className="text-xl text-left">{place.title}</h2>

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function IndexPage() {
   const [places, setPlaces] = useState([]);
+
   useEffect(() => {
     axios.get("/places").then((response) => {
       setPlaces(response.data);
@@ -11,7 +12,7 @@ export default function IndexPage() {
   }, []);
 
   return (
-    <div className="px-10 -mt-5">
+    <div className="lg:mx-20 mx-10">
       <div
         style={{
           backgroundImage: `url("https://blog.japanwondertravel.com/wp-content/uploads/2020/03/shibuya-sky-1200x836.jpg")`,
@@ -31,7 +32,8 @@ export default function IndexPage() {
       <div className="mt-5">
         <h1 className="text-2xl font-semibold">Popular destinations</h1>
         <div className="grid md:grid-cols-4 sm:grid-cols-2 mt-5 gap-6">
-          <div
+          <Link
+            to={"/find/Hanoi"}
             className="rounded-3xl shadow-lg"
             style={{
               backgroundImage: `url("https://vcdn1-dulich.vnecdn.net/2022/05/11/hoan-kiem-lake-7673-1613972680-1508-1652253984.jpg?w=0&h=0&q=100&dpr=1&fit=crop&s=2wB1cBTUcNKuk68nrG6LMQ")`,
@@ -45,8 +47,8 @@ export default function IndexPage() {
                 Hanoi
               </h1>
             </div>
-          </div>
-          <div className="grid-rows-2 grid-flow-row">
+          </Link>
+          <div className="grid-rows-2">
             <div
               className="rounded-3xl shadow-lg"
               style={{
@@ -56,11 +58,14 @@ export default function IndexPage() {
                 backgroundSize: "cover",
               }}
             >
-              <div className="pt-52 flex pb-3 pl-3 mb-4">
+              <Link
+                to={"/find/Nha Trang"}
+                className="pt-52 flex pb-3 pl-3 mb-4"
+              >
                 <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
                   Nha Trang
                 </h1>
-              </div>
+              </Link>
             </div>
             <div
               className="rounded-3xl shadow-lg"
@@ -71,14 +76,15 @@ export default function IndexPage() {
                 backgroundSize: "cover",
               }}
             >
-              <div className="pt-28 flex pb-3 pl-3">
+              <Link to="/find/Ho Chi Minh" className="pt-28 flex pb-3 pl-3">
                 <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
                   Ho Chi Minh city
                 </h1>
-              </div>
+              </Link>
             </div>
           </div>
-          <div
+          <Link
+            to="/find/Da Nang"
             className="rounded-3xl shadow-lg"
             style={{
               backgroundImage: `url("https://res.klook.com/image/upload/fl_lossy.progressive,w_800,c_fill,q_85/destination/ur2mrg23d91mex03l4mw.jpg")`,
@@ -92,7 +98,7 @@ export default function IndexPage() {
                 Da Nang
               </h1>
             </div>
-          </div>
+          </Link>
           <div className="grid-rows-2 grid-flow-row">
             <div
               className="rounded-3xl shadow-lg"
@@ -103,11 +109,11 @@ export default function IndexPage() {
                 backgroundSize: "cover",
               }}
             >
-              <div className="pt-32 flex pb-3 pl-3 mb-4">
+              <Link to="/find/Sa Pa" className="pt-32 flex pb-3 pl-3 mb-4">
                 <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
                   Sa Pa
                 </h1>
-              </div>
+              </Link>
             </div>
             <div
               className="rounded-3xl shadow-lg"
@@ -118,11 +124,11 @@ export default function IndexPage() {
                 backgroundSize: "cover",
               }}
             >
-              <div className="pt-48 flex pb-3 pl-3">
+              <Link to="/find/Phu Quoc" className="pt-48 flex pb-3 pl-3">
                 <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
                   Phu Quoc
                 </h1>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -143,8 +149,8 @@ export default function IndexPage() {
                       />
                     )}
                   </div>
-                  <h2 className="font-bold">{place.address}</h2>
-                  <h3 className="text-sm text-gray-500">{place.title}</h3>
+                  <h2 className="font-bold">{place.title}</h2>
+                  <h3 className="text-sm text-gray-500">{place.address}</h3>
                   <div className="mt-1">
                     <span className="font-bold">${place.price}</span> per night
                   </div>

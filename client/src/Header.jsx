@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
 
 export default function Header() {
+  const [find, setFind] = useState("");
   const userInfo = useContext(UserContext);
 
   return (
@@ -29,12 +30,14 @@ export default function Header() {
           StayEasy
         </span>
       </Link>
-      <form className="flex items-center w-2/5 mx-10">
+      <form className="flex items-center w-2/5 mx-10" action={"/find/" + find}>
         <div className="relative w-full">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <span className="material-symbols-outlined">search</span>
           </div>
           <input
+            value={find}
+            onChange={(ev) => setFind(ev.target.value)}
             type="text"
             className="bg-gray-50 border border-gray-300 text-gray-900  rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
             placeholder="Search your destination..."

@@ -12,18 +12,26 @@ export default function BookingsPage() {
     });
   }, []);
   return (
-    <div className="px-10">
+    <div className="lg:mx-60 mx-10">
       <AccountNav />
-      <div>
+      <div className="mb-8">
         {bookings?.length > 0 &&
           bookings.map((booking) => (
             <Link
               key={booking}
               to={`/account/bookings/${booking._id}`}
-              className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mb-3 drop-shadow-lg"
+              className="flex gap-4 bg-gray-100 rounded-2xl overflow-hidden mb-5 drop-shadow-lg"
             >
               <div className="p-3 w-48">
-                <img className="object-cover" src={booking.place.photos[0]} />
+                {booking.place.photos[0] && (
+                  <img className="object-cover" src={booking.place.photos[0]} />
+                )}
+                {!booking.place.photos[0] && (
+                  <img
+                    className="h-28 object-cover"
+                    src="https://kelembagaan.kemnaker.go.id/assets/img/no-image.svg"
+                  />
+                )}
               </div>
               <div className="py-3 pr-3 grow">
                 <h2 className="text-xl">{booking.place.title}</h2>
