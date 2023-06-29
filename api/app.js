@@ -8,6 +8,7 @@ const User = require("./models/User.js");
 const Place = require("./models/Place.js");
 const Booking = require("./models/Booking.js");
 const Feedback = require("./models/Feedback.js")
+const Wishlist = require("./models/Wishlist.js")
 const jwt = require("jsonwebtoken")
 const cookieParser = require("cookie-parser")
 
@@ -292,6 +293,60 @@ app.get('/feedback/:id', async (req, res) => {
 
 app.get('/top-feedback/', async (req, res) => {
     res.json(await Feedback.find().populate('place').populate('feedback.user').sort({ rating: -1 }));
+})
+
+app.post('/wishlist', async (req, res) => {
+    const { token } = req.cookies;
+    const { place } = req.body
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) {
+            throw err;
+        }
+        const wishlist = await Wishlist.findOne({ owner: userData.id })
+        if (wishlist) {
+            res.json(await Wishlist.findOneAndUpdate({ owner: userData.id }, {
+                $push: {
+                    wishlist: {
+                        place: place
+                    },
+                }
+            }))
+        } else {
+            res.json(await Wishlist.create({
+                owner: userData.id,
+                wishlist: {
+                    place: place
+                }
+            }))
+        }
+    })
+})
+
+app.get("/wishlist", async (req, res) => {
+    const { token } = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) {
+            throw err;
+        }
+        res.json(await Wishlist.find({ owner: userData.id }).populate('wishlist.place'))
+    })
+})
+
+app.put("/wishlist", async (req, res) => {
+    const { token } = req.cookies;
+    const { place } = req.body
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) {
+            throw err;
+        }
+        res.json(await Wishlist.findOneAndUpdate({ owner: userData.id }, {
+            $pull: {
+                wishlist: {
+                    place: place
+                },
+            }
+        }))
+    })
 })
 
 module.exports = app;

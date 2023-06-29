@@ -12,7 +12,7 @@ export default function IndexPage() {
   }, []);
 
   return (
-    <div className="lg:mx-20 mx-10">
+    <div className="lg:mx-20 mx-10 -mt-5">
       <div
         style={{
           backgroundImage: `url("https://blog.japanwondertravel.com/wp-content/uploads/2020/03/shibuya-sky-1200x836.jpg")`,
@@ -44,7 +44,7 @@ export default function IndexPage() {
           >
             <div className="pt-3 flex pb-3 pl-3">
               <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
-                Hanoi
+                Ha Noi
               </h1>
             </div>
           </Link>
@@ -145,6 +145,13 @@ export default function IndexPage() {
                       <img
                         className="rounded-2xl object-cover aspect-square"
                         src={doc.place.photos?.[0]}
+                        alt=""
+                      />
+                    )}
+                    {!doc.place.photos?.[0] && (
+                      <img
+                        className="rounded-2xl object-cover aspect-square"
+                        src="https://kelembagaan.kemnaker.go.id/assets/img/no-image.svg"
                         alt=""
                       />
                     )}
