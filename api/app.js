@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs")
 const User = require("./models/User.js");
 const Place = require("./models/Place.js");
 const Booking = require("./models/Booking.js");
+const Feedback = require("./models/Feedback.js")
 const jwt = require("jsonwebtoken")
 const cookieParser = require("cookie-parser")
 
@@ -35,11 +36,15 @@ db.once('open', () => {
     console.log('Connected to MongoDB');
 });
 
-
 app.listen(3001, () => {
     console.log("Server is running on port 3001");
 });
 
+app.get('/test', (req, res) => {
+    res.json('ok')
+})
+
+// register user 
 app.post('/register', async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
     try {
@@ -55,6 +60,7 @@ app.post('/register', async (req, res) => {
     }
 });
 
+// login user
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const userDoc = await User.findOne({ email });
@@ -76,6 +82,7 @@ app.post('/login', async (req, res) => {
     }
 })
 
+// Get login information (email)
 app.get('/profile', (req, res) => {
     const { token } = req.cookies;
     if (token) {
@@ -88,6 +95,7 @@ app.get('/profile', (req, res) => {
     } else res.json(null)
 })
 
+// Get all details information of user
 app.get('/user', (req, res) => {
     const { token } = req.cookies;
     if (token) {
@@ -102,15 +110,12 @@ app.get('/user', (req, res) => {
     } else res.json(null)
 })
 
+// Log out
 app.post('/logout', (req, res) => {
     res.cookie('token', '').json(true);
 });
 
-app.get('/test', (req, res) => {
-    res.json('ok')
-})
-
-
+// Upload a place
 app.post('/places', (req, res) => {
     const { token } = req.cookies;
     const {
@@ -131,6 +136,7 @@ app.post('/places', (req, res) => {
     })
 });
 
+// Update a place
 app.put('/places', async (req, res) => {
     const { token } = req.cookies;
     const {
@@ -153,10 +159,12 @@ app.put('/places', async (req, res) => {
     })
 });
 
+// Get all places
 app.get("/places", async (req, res) => {
     res.json(await Place.find())
 })
 
+// Get places uploaded by user
 app.get('/user-places', (req, res) => {
     const { token } = req.cookies;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
@@ -168,11 +176,13 @@ app.get('/user-places', (req, res) => {
     })
 })
 
+// Get place by id
 app.get('/places/:id', async (req, res) => {
     const { id } = req.params
     res.json(await Place.findById(id));
 })
 
+// Delete place by id
 app.delete('/places/:id', async (req, res) => {
     const { id } = req.params
     await Place.findByIdAndDelete(id)
@@ -180,12 +190,14 @@ app.delete('/places/:id', async (req, res) => {
     res.json("Success");
 })
 
+// Query to find place
 app.get('/places/find/:query', async (req, res) => {
     const { query } = req.params
     const places = await Place.find({ address: { $regex: query } });
     res.json(places)
 })
 
+// Upload new booking
 app.post('/bookings', async (req, res) => {
     const { token } = req.cookies;
     const {
@@ -206,6 +218,7 @@ app.post('/bookings', async (req, res) => {
     })
 });
 
+// Get bookings by user
 app.get('/bookings', async (req, res) => {
     const { token } = req.cookies;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
@@ -216,12 +229,69 @@ app.get('/bookings', async (req, res) => {
     })
 });
 
+// Delete booking
 app.delete('/bookings/:id', async (req, res) => {
+    const { token } = req.cookies;
     const { id } = req.params
-    res.json(await Booking.findByIdAndDelete(id))
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) {
+            throw err;
+        }
+        res.json(await Booking.deleteOne({ user: userData.id, _id: id }));
+    })
 })
 
+app.post('/feedback', async (req, res) => {
+    const { token } = req.cookies;
+    const { place, comment, rate } = req.body;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) {
+            throw err;
+        }
+        const feedbackDoc = await Feedback.findOne({ place: place });
+        if (feedbackDoc) {
+            const updatedFeedbackDoc = await Feedback.findOneAndUpdate(
+                { place: place },
+                {
+                    $push: {
+                        feedback: {
+                            user: userData.id,
+                            comment,
+                            rate,
+                            date: new Date(),
+                        },
+                    }
+                },
+            );
+            const feedbackCount = updatedFeedbackDoc.feedback.length;
+            const newRating = (updatedFeedbackDoc.rating * feedbackCount + rate) / (feedbackCount + 1);
+            updatedFeedbackDoc.rating = newRating;
+            await updatedFeedbackDoc.save();
+            res.json(updatedFeedbackDoc);
+        } else {
+            const newFeedbackDoc = await Feedback.create({
+                place: place,
+                rating: rate,
+                feedback: {
+                    user: userData.id,
+                    comment,
+                    rate,
+                    date: new Date(),
+                },
+            });
+            res.json(newFeedbackDoc);
+        }
+    });
+});
 
 
+app.get('/feedback/:id', async (req, res) => {
+    const { id } = req.params
+    res.json(await Feedback.find({ place: id }).populate('place').populate('feedback.user'));
+})
+
+app.get('/top-feedback/', async (req, res) => {
+    res.json(await Feedback.find().populate('place').populate('feedback.user').sort({ rating: -1 }));
+})
 
 module.exports = app;

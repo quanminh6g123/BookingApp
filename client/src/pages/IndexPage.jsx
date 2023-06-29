@@ -6,7 +6,7 @@ export default function IndexPage() {
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
-    axios.get("/places").then((response) => {
+    axios.get("/top-feedback").then((response) => {
       setPlaces(response.data);
     });
   }, []);
@@ -134,25 +134,39 @@ export default function IndexPage() {
         </div>
       </div>
       <div className="mt-5">
-        <h1 className="text-2xl font-semibold">Hotels</h1>
-        <div className="mt-6 grid gap-x-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        <h1 className="text-2xl font-semibold">Hotels loved by guests</h1>
+        <div className="mt-6 grid gap-x-4 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {places.length > 0 &&
-            places.slice(0, 5).map((place) => (
-              <Link to={"/place/" + place._id} key={place._id}>
+            places.map((doc) => (
+              <Link to={"/place/" + doc.place._id} key={doc.place._id}>
                 <div className="border-2 p-4 rounded-xl shadow-lg">
                   <div className="bg-gray-500 mb-2 rounded-2xl flex">
-                    {place.photos?.[0] && (
+                    {doc.place.photos?.[0] && (
                       <img
                         className="rounded-2xl object-cover aspect-square"
-                        src={place.photos?.[0]}
+                        src={doc.place.photos?.[0]}
                         alt=""
                       />
                     )}
                   </div>
-                  <h2 className="font-bold">{place.title}</h2>
-                  <h3 className="text-sm text-gray-500">{place.address}</h3>
-                  <div className="mt-1">
-                    <span className="font-bold">${place.price}</span> per night
+                  <div className="h-20">
+                    <h2 className="font-bold">{doc.place.title}</h2>
+                    <h3 className="text-sm text-gray-500">
+                      {doc.place.address}
+                    </h3>
+                  </div>
+                  <div className="mt-1 flex justify-between">
+                    <div>
+                      <span className="font-bold">${doc.place.price}</span>
+                      /night
+                    </div>
+                    <div className="flex items-center">
+                      <span className="material-symbols-outlined text-lg">
+                        star
+                      </span>
+                      <h1 className="font-semibold">{doc.rating}</h1>
+                      <h1 className="text-gray-400">/5</h1>
+                    </div>
                   </div>
                 </div>
               </Link>

@@ -30,7 +30,10 @@ export default function Header() {
           StayEasy
         </span>
       </Link>
-      <form className="flex items-center w-2/5 mx-10" action={"/find/" + find}>
+      <form
+        className="flex items-center w-2/5 mx-10"
+        action={find.trim() !== "" ? "/find/" + find : "#"}
+      >
         <div className="relative w-full">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <span className="material-symbols-outlined">search</span>

@@ -4,17 +4,23 @@ import axios from "axios";
 import AddressLink from "../AddressLink";
 import PlaceGallery from "../PlaceGallery";
 import BookingDates from "../BookingDates";
+import Rate from "../Rate";
 
 export default function BookingPage() {
   const { id } = useParams();
+  const [place, setPlace] = useState(null);
   const [booking, setBooking] = useState(null);
   const [redirect, setRedirect] = useState(false);
+  const [rate, setRate] = useState(3);
+  const [comment, setComment] = useState("");
+
   useEffect(() => {
     if (id) {
       axios.get("/bookings").then((response) => {
         const foundBooking = response.data.find(({ _id }) => _id === id);
         if (foundBooking) {
           setBooking(foundBooking);
+          setPlace(foundBooking.place);
         }
       });
     }
@@ -25,7 +31,6 @@ export default function BookingPage() {
   }
 
   async function deleteBooking(ev) {
-    console.log(123);
     ev.preventDefault();
     if (id) {
       await axios.delete(`/bookings/${id}`, {});
@@ -34,6 +39,16 @@ export default function BookingPage() {
   }
   if (redirect) {
     return <Navigate to={"/account/bookings"} />;
+  }
+
+  async function sendFeedback(ev) {
+    ev.preventDefault();
+    await axios.post("/feedback", {
+      place: place._id,
+      comment,
+      rate,
+    });
+    alert("Feedback successful.");
   }
 
   return (
@@ -51,12 +66,34 @@ export default function BookingPage() {
         </div>
       </div>
       <PlaceGallery place={booking.place} />
+
       <button
         onClick={deleteBooking}
-        className=" mt-10 w-full bg-red-400 text-white mb-4 py-2 border rounded-xl text-xl font-semibold"
+        className=" mt-8 w-full bg-red-400 text-white mb-4 py-2 border rounded-xl text-xl font-semibold"
       >
         Cancel booking
       </button>
+      <div className="pt-5 border-t-2 mt-3">
+        <label className="block mb-2 text-xl font-semibold">Your review</label>
+        <textarea
+          value={comment}
+          onChange={(ev) => setComment(ev.target.value)}
+          id="message"
+          rows="4"
+          className="block p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
+          placeholder="Write your thoughts here..."
+        ></textarea>
+        <h1 className="font-semibold text-xl py-3">
+          How do you rate our hotel?
+        </h1>
+        <Rate rating={rate} onRating={(rate) => setRate(rate)} />
+        <button
+          onClick={sendFeedback}
+          className=" mt-5 w-full bg-primary hover:bg-blue-500 text-white mb-4 py-2 border rounded-xl text-xl font-semibold"
+        >
+          Send feedback
+        </button>
+      </div>
     </div>
   );
 }

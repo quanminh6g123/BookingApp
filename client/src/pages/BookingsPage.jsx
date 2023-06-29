@@ -11,6 +11,7 @@ export default function BookingsPage() {
       setBookings(response.data);
     });
   }, []);
+
   return (
     <div className="lg:mx-60 mx-10">
       <AccountNav />
@@ -18,7 +19,7 @@ export default function BookingsPage() {
         {bookings?.length > 0 &&
           bookings.map((booking) => (
             <Link
-              key={booking}
+              key={booking._id}
               to={`/account/bookings/${booking._id}`}
               className="flex gap-4 bg-gray-100 rounded-2xl overflow-hidden mb-5 drop-shadow-lg"
             >
