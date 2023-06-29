@@ -7,7 +7,7 @@ export default function Header() {
   const userInfo = useContext(UserContext);
 
   return (
-    <header className="flex justify-between px-10 pb-4 mb-5 border-b-2 border-gray-100">
+    <header className="flex justify-between px-3 sm:px-5 sm:pb-3 sm:mb-5 mx-4 mb-3 pb-2 border-b-2 border-gray-100">
       <Link
         to={"/"}
         className="flex items-center gap-1 text-primary md:pl-2 lg:pl-5"
@@ -31,7 +31,7 @@ export default function Header() {
         </span>
       </Link>
       <form
-        className="flex items-center w-2/5 mx-10"
+        className="flex items-center sm:w-2/5 sm:mx-10"
         action={find.trim() !== "" ? "/find/" + find : "#"}
       >
         <div className="relative w-full">
@@ -42,13 +42,13 @@ export default function Header() {
             value={find}
             onChange={(ev) => setFind(ev.target.value)}
             type="text"
-            className="bg-gray-50 border border-gray-300 text-gray-900  rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+            className="bg-gray-50 border border-gray-300 text-gray-900  rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full px-10 py-1 sm:py-2"
             placeholder="Search your destination..."
           />
         </div>
         <button
           type="submit"
-          className="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-full border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "
+          className="inline-flex items-center p-1 sm:p-2 ml-2 text-sm font-medium text-white bg-blue-700 rounded-full border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "
         >
           <span className="material-symbols-outlined">search</span>
         </button>
@@ -56,19 +56,11 @@ export default function Header() {
       <div>
         {!userInfo.user ? (
           <div>
-            <Link
-              to="/register"
-              type="button"
-              className="text-primary bg-white hover:bg-gray-100 border-primary border-2 rounded-full px-5 py-2.5 text-center mr-2 mb-2 font-semibold"
-            >
-              Register
-            </Link>
-            <Link
-              to="/login"
-              type="button"
-              className="text-white bg-primary hover:bg-blue-800 border-primary border-2 rounded-full px-5 py-2.5 text-center mr-2 mb-2 font-semibold "
-            >
-              Log in
+            <Link to="/login" type="button" className="">
+              <div className="text-white bg-primary hover:bg-blue-800 border-primary border-2 rounded-full text-center font-semibold align-middle pl-2 pr-4 py-1 gap-2 flex">
+                <span className="material-symbols-outlined">login</span>
+                <h1 className="hidden sm:inline-flex">Log in</h1>
+              </div>
             </Link>
           </div>
         ) : (

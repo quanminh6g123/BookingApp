@@ -12,7 +12,7 @@ export default function IndexPage() {
   }, []);
 
   return (
-    <div className="lg:mx-20 mx-10 -mt-5">
+    <div className="mx-10 lg:mx-16 -mt-5">
       <div
         style={{
           backgroundImage: `url("https://blog.japanwondertravel.com/wp-content/uploads/2020/03/shibuya-sky-1200x836.jpg")`,
@@ -31,7 +31,7 @@ export default function IndexPage() {
       </div>
       <div className="mt-5">
         <h1 className="text-2xl font-semibold">Popular destinations</h1>
-        <div className="grid md:grid-cols-4 sm:grid-cols-2 mt-5 gap-6">
+        <div className="grid md:grid-cols-4 grid-cols-2 mt-5 gap-6">
           <Link
             to={"/find/Hanoi"}
             className="rounded-3xl shadow-lg"
@@ -43,7 +43,7 @@ export default function IndexPage() {
             }}
           >
             <div className="pt-3 flex pb-3 pl-3">
-              <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+              <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50 font-medium">
                 Ha Noi
               </h1>
             </div>
@@ -62,7 +62,7 @@ export default function IndexPage() {
                 to={"/find/Nha Trang"}
                 className="pt-52 flex pb-3 pl-3 mb-4"
               >
-                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50 font-medium">
                   Nha Trang
                 </h1>
               </Link>
@@ -77,7 +77,7 @@ export default function IndexPage() {
               }}
             >
               <Link to="/find/Ho Chi Minh" className="pt-28 flex pb-3 pl-3">
-                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50 font-medium">
                   Ho Chi Minh city
                 </h1>
               </Link>
@@ -94,7 +94,7 @@ export default function IndexPage() {
             }}
           >
             <div className="pt-3 flex pb-3 pl-3">
-              <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+              <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50 font-medium">
                 Da Nang
               </h1>
             </div>
@@ -110,7 +110,7 @@ export default function IndexPage() {
               }}
             >
               <Link to="/find/Sa Pa" className="pt-32 flex pb-3 pl-3 mb-4">
-                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50 font-medium">
                   Sa Pa
                 </h1>
               </Link>
@@ -125,7 +125,7 @@ export default function IndexPage() {
               }}
             >
               <Link to="/find/Phu Quoc" className="pt-48 flex pb-3 pl-3">
-                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50">
+                <h1 className="px-3 rounded-xl bg-gray-100 bg-opacity-50 font-medium">
                   Phu Quoc
                 </h1>
               </Link>
@@ -156,7 +156,7 @@ export default function IndexPage() {
                       />
                     )}
                   </div>
-                  <div className="h-20">
+                  <div className="h-28">
                     <h2 className="font-bold">{doc.place.title}</h2>
                     <h3 className="text-sm text-gray-500">
                       {doc.place.address}

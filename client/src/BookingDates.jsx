@@ -9,7 +9,7 @@ export default function BookingDates({ booking, className }) {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="w-6 h-6"
+        className="sm:w-6 sm:h-6 w-5 h-5"
       >
         <path
           strokeLinecap="round"
@@ -22,14 +22,14 @@ export default function BookingDates({ booking, className }) {
         new Date(booking.checkIn)
       )}{" "}
       nights:
-      <div className="flex gap-1 items-center ml-2">
+      <div className="flex gap-1 items-center ml-2 text-sm sm:text-base">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="sm:w-6 sm:h-6 w-5 h-5"
         >
           <path
             strokeLinecap="round"
@@ -40,14 +40,14 @@ export default function BookingDates({ booking, className }) {
         {format(new Date(booking.checkIn), "yyyy-MM-dd")}
       </div>
       &rarr;
-      <div className="flex gap-1 items-center">
+      <div className="flex gap-1 items-center text-sm sm:text-base">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="sm:w-6 sm:h-6 w-5 h-5"
         >
           <path
             strokeLinecap="round"
