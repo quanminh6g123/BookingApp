@@ -194,7 +194,7 @@ app.delete('/places/:id', async (req, res) => {
 // Query to find place
 app.get('/places/find/:query', async (req, res) => {
     const { query } = req.params
-    const places = await Place.find({ address: { $regex: query } });
+    const places = await Place.find({ address: { $regex: query, $options: 'i' } });
     res.json(places)
 })
 
@@ -292,44 +292,48 @@ app.get('/feedback/:id', async (req, res) => {
 })
 
 app.get('/top-feedback/', async (req, res) => {
-    res.json(await Feedback.find().populate('place').populate('feedback.user').sort({ rating: -1 }));
+    res.json(await Feedback.find().populate('place').populate('feedback.user').sort({ rating: -1 }).limit(5));
 })
 
 app.post('/wishlist', async (req, res) => {
     const { token } = req.cookies;
     const { place } = req.body
-    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-        if (err) {
-            throw err;
-        }
-        const wishlist = await Wishlist.findOne({ owner: userData.id })
-        if (wishlist) {
-            res.json(await Wishlist.findOneAndUpdate({ owner: userData.id }, {
-                $push: {
+    if (token) {
+        jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+            if (err) {
+                throw err;
+            }
+            const wishlist = await Wishlist.findOne({ owner: userData.id })
+            if (wishlist) {
+                res.json(await Wishlist.findOneAndUpdate({ owner: userData.id }, {
+                    $push: {
+                        wishlist: {
+                            place: place
+                        },
+                    }
+                }))
+            } else {
+                res.json(await Wishlist.create({
+                    owner: userData.id,
                     wishlist: {
                         place: place
-                    },
-                }
-            }))
-        } else {
-            res.json(await Wishlist.create({
-                owner: userData.id,
-                wishlist: {
-                    place: place
-                }
-            }))
-        }
-    })
+                    }
+                }))
+            }
+        })
+    } else res.json(null)
 })
 
 app.get("/wishlist", async (req, res) => {
     const { token } = req.cookies;
-    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-        if (err) {
-            throw err;
-        }
-        res.json(await Wishlist.find({ owner: userData.id }).populate('wishlist.place'))
-    })
+    if (token) {
+        jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+            if (err) {
+                throw err;
+            }
+            res.json(await Wishlist.find({ owner: userData.id }).populate('wishlist.place'))
+        })
+    } else res.json(null)
 })
 
 app.put("/wishlist", async (req, res) => {

@@ -5,9 +5,12 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 export default function WishlistPage() {
   const [places, setPlaces] = useState([]);
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
     axios.get("/wishlist").then((response) => {
       setPlaces(response.data[0].wishlist);
+      setReady(true);
     });
   }, []);
 
@@ -21,9 +24,24 @@ export default function WishlistPage() {
     );
   }
 
+  if (!ready)
+    return (
+      <div>
+        <AccountNav />
+        <h1 className="text-center text-3xl font-semibold my-20">
+          Loading...!
+        </h1>
+      </div>
+    );
+
   return (
     <div>
       <AccountNav />
+      {places.length === 0 && (
+        <h1 className="text-center text-3xl font-semibold my-20">
+          Let's add hotels to your wishlist !!!
+        </h1>
+      )}
       <div className="lg:mx-20 mx-10 my-10 mt-6 grid gap-x-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {places.length > 0 &&
           places.map((doc) => (

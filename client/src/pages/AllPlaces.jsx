@@ -10,15 +10,19 @@ export default function AllPlaces() {
       setPlaces(response.data);
     });
     axios.get("/wishlist").then((response) => {
-      setWishlist(response.data[0].wishlist.map((obj) => obj.place._id));
+      if (response.data)
+        setWishlist(response.data[0].wishlist.map((obj) => obj.place._id));
     });
   }, []);
 
   async function addWishlist(ev, place) {
-    await axios.post("/wishlist", {
+    const res = await axios.post("/wishlist", {
       place: place._id,
     });
-    setWishlist((prevWishlist) => [...prevWishlist, place._id]);
+    // console.log(res);
+    if (res.data) {
+      setWishlist((prevWishlist) => [...prevWishlist, place._id]);
+    } else alert("You must login to favorite places!!");
   }
 
   async function removeWishlist(ev, place) {

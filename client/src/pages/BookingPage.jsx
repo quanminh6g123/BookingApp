@@ -49,6 +49,7 @@ export default function BookingPage() {
       rate,
     });
     alert("Feedback successful.");
+    setRedirect(true);
   }
 
   return (

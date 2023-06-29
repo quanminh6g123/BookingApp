@@ -171,7 +171,9 @@ export default function IndexPage() {
                       <span className="material-symbols-outlined text-lg">
                         star
                       </span>
-                      <h1 className="font-semibold">{doc.rating}</h1>
+                      <h1 className="font-semibold">
+                        {doc.rating.toPrecision(2)}
+                      </h1>
                       <h1 className="text-gray-400">/5</h1>
                     </div>
                   </div>

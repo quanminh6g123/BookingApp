@@ -13,7 +13,7 @@ export default function Footer() {
         <h1>Group 17</h1>
         <h1>
           Web Technology and <br />
-          E-commerce
+          E-services
         </h1>
       </div>
     </div>

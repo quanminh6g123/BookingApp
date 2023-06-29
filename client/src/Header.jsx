@@ -7,7 +7,7 @@ export default function Header() {
   const userInfo = useContext(UserContext);
 
   return (
-    <header className="flex justify-between px-10 mb-7">
+    <header className="flex justify-between px-10 pb-4 mb-5 border-b-2 border-gray-100">
       <Link
         to={"/"}
         className="flex items-center gap-1 text-primary md:pl-2 lg:pl-5"

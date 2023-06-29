@@ -21,9 +21,9 @@ export default function FindPlacePage() {
   return (
     <div>
       <h1 className="px-20 pt-3 font-semibold text-xl">
-        There are {places.length} places find
+        There are {places.length} places &quot;{query}&quot; find
       </h1>
-      <div className="px-10 mt-6 grid gap-x-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+      <div className="px-20 mt-6 grid gap-x-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {places.length > 0 &&
           places.map((place) => (
             <Link to={"/place/" + place._id} key={place._id}>

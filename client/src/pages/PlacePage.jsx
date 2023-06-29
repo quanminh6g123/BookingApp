@@ -26,7 +26,7 @@ export default function PlacePage() {
       setRate(response.data[0].rating);
     });
     axios.get("/wishlist").then((response) => {
-      setWishlist(response.data[0].wishlist.map((obj) => obj.place));
+      setWishlist(response.data[0].wishlist.map((obj) => obj.place._id));
     });
   }, [id]);
 
@@ -74,7 +74,9 @@ export default function PlacePage() {
             <span className="material-symbols-outlined text-2xl pr-1">
               star
             </span>
-            {rate !== 0 && <h1 className="text-2xl font-semibold">{rate}</h1>}
+            {rate !== 0 && (
+              <h1 className="text-2xl font-semibold">{rate.toPrecision(2)}</h1>
+            )}
             {rate === 0 && <h1 className="text-2xl font-semibold">-</h1>}
             <h1 className="text-xl text-gray-400">/5</h1>
             <h1 className="font-semibold px-1">
@@ -158,7 +160,9 @@ export default function PlacePage() {
             <span className="material-symbols-outlined text-2xl pr-1">
               star
             </span>
-            {rate !== 0 && <h1 className="text-2xl font-semibold">{rate}</h1>}
+            {rate !== 0 && (
+              <h1 className="text-2xl font-semibold">{rate.toPrecision(2)}</h1>
+            )}
             {rate === 0 && <h1 className="text-2xl font-semibold">-</h1>}
             <h1 className="text-xl text-gray-400">/5</h1>
             <h1 className="font-semibold px-1">
