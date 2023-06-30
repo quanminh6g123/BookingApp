@@ -141,7 +141,7 @@ export default function PlacePage() {
             </li>
           ))}
         </div>
-        <div>
+        <div className="z-0">
           <BookingWidget place={place} />
         </div>
       </div>

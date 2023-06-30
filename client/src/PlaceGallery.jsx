@@ -5,10 +5,10 @@ export default function PlaceGallery({ place }) {
 
   if (showAllPhotos) {
     return (
-      <div className="absolute inset-0 bg-black text-white min-h-screen m-auto">
-        <div className="bg-black p-8 grid gap-4">
+      <div className="absolute inset-0 bg-black text-white z-10 h-full">
+        <div className="bg-black p-10 place-content-center">
           <div>
-            <h2 className="text-3xl mr-48">Photos of {place.title}</h2>
+            <h2 className="text-3xl mr-48 pb-10">Photos of {place.title}</h2>
             <button
               onClick={() => setShowAllPhotos(false)}
               className="fixed right-12 top-8 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black"
@@ -30,8 +30,8 @@ export default function PlaceGallery({ place }) {
           </div>
           {place?.photos?.length > 0 &&
             place.photos.map((photo) => (
-              <div key={photo}>
-                <img className="max-w-3xl" src={photo} alt="" />
+              <div key={photo} className="">
+                <img className="max-w-1/2 pb-5" src={photo} alt="" />
               </div>
             ))}
         </div>
@@ -77,7 +77,7 @@ export default function PlaceGallery({ place }) {
       </div>
       <button
         onClick={() => setShowAllPhotos(true)}
-        className="flex gap-1 absolute bottom-2 right-2 py-2 px-4 bg-primary text-white rounded-3xl"
+        className="flex gap-1 absolute bottom-2 right-2 py-2 px-4 bg-white text-blue-500 rounded-3xl font-medium"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

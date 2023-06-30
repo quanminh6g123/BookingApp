@@ -22,10 +22,10 @@ export default function FindPlacePage() {
 
   return (
     <div>
-      <h1 className="px-10 sm:px-20 pt-3 font-semibold text-xl">
+      <h1 className="px-10 md:px-20 pt-3 font-semibold text-xl">
         There are {places.length} places &quot;{query}&quot; find
       </h1>
-      <div className="px-10 sm:px-20 my-6 grid gap-x-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+      <div className="px-10 md:px-20 my-6 grid gap-x-6 gap-y-8 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {places.length > 0 &&
           places.map((place) => (
             <Link to={"/place/" + place._id} key={place._id}>
@@ -47,8 +47,12 @@ export default function FindPlacePage() {
                   )}
                 </div>
                 <div className="h-24">
-                  <h2 className="font-bold">{place.title}</h2>
-                  <h3 className="text-sm text-gray-500">{place.address}</h3>
+                  <h2 className="font-bold overflow-hidden text-ellipsis">
+                    {place.title}
+                  </h2>
+                  <h3 className="text-sm text-gray-500 overflow-hidden text-ellipsis h-10">
+                    {place.address}
+                  </h3>
                 </div>
                 <div className="mt-1 flex justify-between">
                   <div>

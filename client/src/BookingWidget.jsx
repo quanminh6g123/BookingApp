@@ -80,6 +80,7 @@ export default function BookingWidget({ place }) {
             type="number"
             value={numberOfGuests}
             onChange={(ev) => setNumberOfGuests(ev.target.value)}
+            max={20}
           />
         </div>
         {numberOfNights > 0 && (
