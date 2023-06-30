@@ -194,7 +194,7 @@ app.delete('/places/:id', async (req, res) => {
 // Query to find place
 app.get('/places/find/:query', async (req, res) => {
     const { query } = req.params
-    const places = await Place.find({ address: { $regex: query, $options: 'i' } });
+    const places = await Place.find( { $or: [ { address: { $regex: query, $options: 'i' } }, { title: { $regex: query, $options: 'i' } } ] } );
     res.json(places)
 })
 
