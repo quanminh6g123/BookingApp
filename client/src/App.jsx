@@ -15,6 +15,7 @@ import BookingPage from "./pages/BookingPage";
 import AllPlaces from "./pages/AllPlaces";
 import FindPlacePage from "./pages/FindPlaces";
 import WishlistPage from "./pages/WishlistPage";
+import BookingManager from "./pages/BookingManager";
 axios.defaults.baseURL = "http://localhost:3001/";
 axios.defaults.withCredentials = true;
 
@@ -37,6 +38,10 @@ function App() {
           <Route path="/account/places/new" element={<PlacesFormPage />} />
           <Route path="/account/places/:id" element={<PlacesFormPage />} />
           <Route path="/account/bookings" element={<BookingsPage />} />
+          <Route
+            path="/account/booking-management"
+            element={<BookingManager />}
+          />
           <Route path="/account/bookings/:id" element={<BookingPage />} />
           <Route path="/account/wishlist" element={<WishlistPage />} />
           <Route path="/place/:id" element={<PlacePage />} />

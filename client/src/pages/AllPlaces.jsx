@@ -10,7 +10,7 @@ export default function AllPlaces() {
       setPlaces(response.data);
     });
     axios.get("/wishlist").then((response) => {
-      if (response.data)
+      if (response.data[0])
         setWishlist(response.data[0].wishlist.map((obj) => obj.place._id));
     });
   }, []);

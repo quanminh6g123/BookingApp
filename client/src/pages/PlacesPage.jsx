@@ -29,7 +29,7 @@ export default function PlacesPage() {
               clipRule="evenodd"
             />
           </svg>
-          Add new place
+          Add new hotel
         </Link>
         <div className="mt-4 mb-8">
           {places.length > 0 &&

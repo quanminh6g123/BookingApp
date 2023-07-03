@@ -33,7 +33,7 @@ export default function IndexPage() {
         <h1 className="text-2xl font-semibold">Popular destinations</h1>
         <div className="grid md:grid-cols-4 grid-cols-2 mt-5 gap-6">
           <Link
-            to={"/find/Hanoi"}
+            to={"/find/Ha noi"}
             className="rounded-3xl shadow-lg"
             style={{
               backgroundImage: `url("https://vcdn1-dulich.vnecdn.net/2022/05/11/hoan-kiem-lake-7673-1613972680-1508-1652253984.jpg?w=0&h=0&q=100&dpr=1&fit=crop&s=2wB1cBTUcNKuk68nrG6LMQ")`,
@@ -143,7 +143,7 @@ export default function IndexPage() {
                   <div className="bg-gray-500 mb-2 rounded-2xl flex">
                     {doc.place.photos?.[0] && (
                       <img
-                        className="rounded-2xl object-cover aspect-square"
+                        className="rounded-2xl object-cover aspect-square w-full"
                         src={doc.place.photos?.[0]}
                         alt=""
                       />

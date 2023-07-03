@@ -194,7 +194,7 @@ app.delete('/places/:id', async (req, res) => {
 // Query to find place
 app.get('/places/find/:query', async (req, res) => {
     const { query } = req.params
-    const places = await Place.find( { $or: [ { address: { $regex: query, $options: 'i' } }, { title: { $regex: query, $options: 'i' } } ] } );
+    const places = await Place.find({ $or: [{ address: { $regex: query, $options: 'i' } }, { title: { $regex: query, $options: 'i' } }] });
     res.json(places)
 })
 
@@ -227,6 +227,23 @@ app.get('/bookings', async (req, res) => {
             throw err;
         }
         res.json(await Booking.find({ user: userData.id }).populate('place'));
+    })
+});
+
+app.get('/booking-manager', async (req, res) => {
+    const { token } = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) {
+            throw err;
+        }
+        const ownerId = userData.id;
+        const places = await Place.find({ owner: ownerId });
+        const placeIds = places.map(place => place._id);
+        res.json(await Booking.find({
+            place: {
+                $in: placeIds
+            }
+        }).populate('place').populate('user'))
     })
 });
 
