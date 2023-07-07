@@ -1,8 +1,6 @@
 import AccountNav from "../AccountNav";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import BookingDates from "../BookingDates";
 export default function BookingManager() {
   const [bookings, setBookings] = useState([]);
   useEffect(() => {
