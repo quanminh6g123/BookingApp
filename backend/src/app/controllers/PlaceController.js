@@ -1,4 +1,5 @@
 const Place = require('../models/Place');
+const Booking = require('../models/Booking')
 const Wishlist = require('../models/Wishlist')
 const jwt = require('jsonwebtoken');
 const jwtSecret = 'awuichaiuwchasasdwd123';
