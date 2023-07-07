@@ -68,16 +68,13 @@ export default function PlacesFormPage() {
     setAddedPhotos(addedPhotos.filter((photo) => photo !== filename));
   }
 
-  // function uploadPhoto(ev) {
-  //   const files = ev.target.files;
-  //   console.log(URL.createObjectURL(files[0]));
-  // }
-
   async function deletePlace(ev) {
-    console.log(123);
     ev.preventDefault();
     if (id) {
-      await axios.delete(`/places/${id}`, {});
+      const res = await axios.delete(`/places/${id}`, {});
+      if (res.status === 200) {
+        alert("Delete success !");
+      }
     }
     setRedirect(true);
   }
