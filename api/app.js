@@ -187,6 +187,7 @@ app.get('/places/:id', async (req, res) => {
 app.delete('/places/:id', async (req, res) => {
     const { id } = req.params
     await Place.findByIdAndDelete(id)
+    await Wishlist.updateMany({ 'wishlist.place': id }, { $pull: { wishlist: { place: id } } });
     await Booking.deleteMany({ place: id })
     res.json("Success");
 })
@@ -348,10 +349,15 @@ app.get("/wishlist", async (req, res) => {
             if (err) {
                 throw err;
             }
-            res.json(await Wishlist.find({ owner: userData.id }).populate('wishlist.place'))
-        })
-    } else res.json(null)
-})
+            const wishlistData = await Wishlist.find({ owner: userData.id }).populate('wishlist.place');
+            res.json(wishlistData);
+        });
+    } else {
+        res.json(null);
+    }
+});
+
+
 
 app.put("/wishlist", async (req, res) => {
     const { token } = req.cookies;
