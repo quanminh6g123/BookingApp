@@ -11,5 +11,7 @@ router.post('/logout', siteController.logout);
 router.get('/user-places', siteController.userplaces);
 router.get('/top-feedback', siteController.topfeedback);
 //router.get('/', siteController.index);
+router.get('/booking-manager', siteController.bookingManager);
+
 
 module.exports = router;

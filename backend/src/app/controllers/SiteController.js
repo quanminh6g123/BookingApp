@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Place = require('../models/Place');
 const Feedback = require('../models/Feedback');
+const Booking = require('../models/Booking')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const bcryptSalt = bcrypt.genSaltSync(10);
@@ -119,6 +120,23 @@ class SiteController {
                 .sort({ rating: -1 })
                 .limit(5),
         );
+    }
+
+    async bookingManager(req, res) {
+        const { token } = req.cookies;
+        jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+            if (err) {
+                throw err;
+            }
+            const ownerId = userData.id;
+            const places = await Place.find({ owner: ownerId });
+            const placeIds = places.map(place => place._id);
+            res.json(await Booking.find({
+                place: {
+                    $in: placeIds
+                }
+            }).populate('place').populate('user'))
+        })
     }
 }
 

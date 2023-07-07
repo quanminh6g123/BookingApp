@@ -58,6 +58,23 @@ class BookingController {
         });
     }
 
+    async bookingManager(req, res) {
+        const { token } = req.cookies;
+        jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+            if (err) {
+                throw err;
+            }
+            const ownerId = userData.id;
+            const places = await Place.find({ owner: ownerId });
+            const placeIds = places.map(place => place._id);
+            res.json(await Booking.find({
+                place: {
+                    $in: placeIds
+                }
+            }).populate('place').populate('user'))
+        })
+    }
+
     /* //[Get] /course/:id/edit
     edit(req, res, next) {
         Course.findById(req.params.id)

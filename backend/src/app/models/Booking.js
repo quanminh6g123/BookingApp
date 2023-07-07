@@ -11,7 +11,7 @@ const Booking = new Schema(
             required: true,
             ref: 'Place',
         },
-        user: { type: mongoose.Schema.Types.ObjectId, required: true },
+        user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
         checkIn: { type: Date, required: true },
         checkOut: { type: Date, required: true },
         name: { type: String, required: true },
