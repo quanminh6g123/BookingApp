@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 --write \"src/**/*.{js,json,scss}\"",
-    "start": "nodemon --inspect src/index.js",
+    "start": "nodemon src/index.js",
     "watch": "node-sass --watch src/resources/scss --output src/public/css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,13 +25,14 @@
     "mongoose-delete": "^1.0.1",
     "mongoose-slug-generator": "^1.0.4",
     "mongoose-slug-updater": "^3.3.0",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "node-sass": "^9.0.0",
+    "sass": "^1.71.1"
   },
   "devDependencies": {
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
     "morgan": "^1.10.0",
-    "node-sass": "^8.0.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8"
   }

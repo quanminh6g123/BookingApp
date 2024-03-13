@@ -6,16 +6,16 @@ $ cd client
 ```
 Install dependencies:
 ```
-$ yarn
+$ npm install
 ```
 Run client
 ```
-$ yarn dev
+$ npm run dev
 ```
 
 ## 2. Server
 ```
-$ cd api
+$ cd backend
 ```
 Install dependencies:
 ```
